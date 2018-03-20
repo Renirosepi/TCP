@@ -1,29 +1,21 @@
-import java.net.*; 
-
-import java.io.OutputStream;
-
-import java.io.DataOutputStream;
+import java.net.*;            
+import java.io.InputStream;
+import java.io.DataInputStream;
+ 
 public class server
 {
-public static void main(String args[]) throws Exception
-{
-Socket sock = new Socket("localhost", 5000);
-
-	InetAddress ip=sock.getInetAddress();
-
-	System.out.println(ip);       
-
-     String message1 = "Accept Best Wishes, Server";
-	OutputStream ostream = sock.getOutputStream();                 
-
-     DataOutputStream dos = new DataOutputStream(ostream);
-
-     dos.writeBytes(message1);                                                         
-
-     dos.close();                            
-
-     ostream.close();   
-
-     sock.close();
-}
+   public static void main(String args[]) throws Exception
+   {
+     ServerSocket sersock = new ServerSocket(5000); 
+     System.out.println("server is ready");  //  message to know the server is running
+ 
+     Socket sock = sersock.accept();               
+                                                                                          
+     InputStream istream = sock.getInputStream();  
+     DataInputStream dstream = new DataInputStream(istream);
+ 
+     String message2 = dstream.readLine();
+     System.out.println(message2);
+     dstream .close(); istream.close(); sock.close(); sersock.close();
+  }
 }
